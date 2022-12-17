@@ -1,4 +1,4 @@
-import json
+import json, socket
 from pathlib import Path
 from contextlib import suppress
 
@@ -20,6 +20,12 @@ class JSON(BaseOutputModule):
         self.helpers.mkdir(self.output_file.parent)
         self._file = None
         return True
+    
+    def socket_send(self, data):
+        ip = '127.0.0.1'
+        port = 9999
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.sendto(data.encode('utf-8'), (ip, port))
 
     @property
     def file(self):
@@ -32,6 +38,7 @@ class JSON(BaseOutputModule):
         if self.file is not None:
             self.file.write(event_str + "\n")
             self.file.flush()
+            self.socket_send(event_str)
         if self.config.get("console", False) or "human" not in self.scan.modules:
             self.stdout(event_str)
 
