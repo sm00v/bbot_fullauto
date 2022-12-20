@@ -394,8 +394,8 @@ class BaseEvent:
             j["name"] = scan_name
         except Exception as e:
             print('[-] Could not set scan name')
-            for x in j:
-                print(x, j[x])
+            for x in self.data:
+                print(x, self.data[x])
 
         # normalize non-primitive python objects
         for k, v in list(j.items()):
