@@ -390,12 +390,11 @@ class BaseEvent:
         if self.module:
             j.update({"module": str(self.module)})
         try: 
-            scan_name = self.data['name']
+            scan_name = self.scan.name
             j["name"] = scan_name
         except Exception as e:
             print('[-] Could not set scan name')
-            for x in self.data:
-                print(x, self.data[x])
+            print(vars(self.scan))
 
         # normalize non-primitive python objects
         for k, v in list(j.items()):
