@@ -389,6 +389,11 @@ class BaseEvent:
             j.update({"tags": list(self.tags)})
         if self.module:
             j.update({"module": str(self.module)})
+        try: 
+            scan_name = self.data['name']
+            j["name"] = scan_name
+        except Exception as e:
+            print('[-] Could not set scan name')
 
         # normalize non-primitive python objects
         for k, v in list(j.items()):
